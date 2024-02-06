@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+<body>
+
+    <%- include('../partials/nav.ejs') %>
+
+    <div class="content">
+        <section id="todos-container">
+
+            <% if(todos.length > 0) { %>
+                <h2 class="todos-title">Todos:</h2>
+                <% todos.forEach(todo => { %>
+                    <div class="todo">
+                        <p class="todo-title"> <%= todo.content %> </p>
+                        <p class="date"> <%= new Date(todo.createdAt).toLocaleDateString() %> </p>
+                        <button id="delete" data-id="<%- todo._id %>" class="delete-btn" >Delete</button>
+                    </div>
+                <% }) %>
+            <% } else {%>
+                <p class="display-none">There are no Todos to display...</p>
+            <% } %>
+
+
+        </section>
+    </div>
+
+
+    <%- include('../partials/footer.ejs') %>
+
+    <script>
+        // make the deleting button listener and remove todo
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach((button) => {
+                button.addEventListener('click', async (event) => {
+                    const todoID = event.target.dataset.id;
+
+                    // fetch
+                    try{
+                        const response = await fetch(`/todos/${todoID}`, {
+                            method: 'DELETE'
+                        });
+                        
+                        if(response.ok){
+                            window.location.reload()
+                        } else{
+                            console.error('error');
+                        }
+
+                    } catch(error){
+                        console.log('error: ' + error )
+                    }
+                })
+            })
+        })
+
+
+    </script>
+</body>
+</html>

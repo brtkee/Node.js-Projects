@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+<body>
+    
+    <%- include('../partials/nav.ejs') %>
+
+    <div id="create-todo-content" class="content">
+        <form action="/todos" id="form" method="post">
+            <input type="text" name="content" id="input-value" placeholder="enter a todo..." required>
+            <button id="submit">Submit</button>
+        </form>
+    </div>
+
+    <%- include('../partials/footer.ejs') %>
+
+</body>
+</html>
